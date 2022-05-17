@@ -1,5 +1,14 @@
 (tests
- (names int flat interval pair powerset reverse_powerset sign taint with_top)
- (libraries lattices base qcheck lcheck)
+ (names
+  int_test
+  flat_test
+  interval
+  pair
+  powerset
+  reverse_powerset
+  sign
+  taint
+  with_top)
+ (libraries lattices core qcheck qcheck-alcotest alcotest)
  (preprocess
   (pps ppx_deriving.eq ppx_sexp_conv)))

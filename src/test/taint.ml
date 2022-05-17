@@ -1,7 +1,7 @@
-open Base
+open! Core
 open QCheck
 
-module L = Flat.Make (struct
+module L = Flat_test.Make (struct
   include Bool
 
   let gen = Gen.bool
@@ -9,6 +9,12 @@ module L = Flat.Make (struct
   let name = "taint"
 end)
 
-module LTests = LCheck.GenericTopTests (L)
+module LTests = LCheck.GenericTests (L)
+module LTestsTop = LCheck.GenericTopTests (L)
 
-let () = Caml.exit (QCheck_base_runner.run_tests LTests.suite)
+let () =
+  Alcotest.run "taint lattice"
+    [
+      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+    ]

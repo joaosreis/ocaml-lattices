@@ -1,4 +1,4 @@
-open Base
+open! Core
 open QCheck
 
 module L : LCheck.LATTICE_TOPLESS = struct
@@ -35,4 +35,6 @@ end
 
 module LTests = LCheck.GenericTests (L)
 
-let () = Caml.exit (QCheck_base_runner.run_tests LTests.suite)
+let () =
+  Alcotest.run "powerset lattice"
+    [ ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite) ]

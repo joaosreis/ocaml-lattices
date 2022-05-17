@@ -1,3 +1,5 @@
+open! Core
+
 type sign = Zero | Pos | Neg [@@deriving sexp_of]
 
 type t = sign Flat.flat

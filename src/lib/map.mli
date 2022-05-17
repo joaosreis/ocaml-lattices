@@ -1,4 +1,4 @@
-open Base
+open! Core
 
 module Make (D : sig
   include Comparable.S

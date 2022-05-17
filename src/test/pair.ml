@@ -1,7 +1,8 @@
+open! Core
 open QCheck
 
 module L : LCheck.LATTICE_TOPLESS = struct
-  module L = Int
+  module L = Int_test
   open Lattices
   module L_1 = Pair.Make (L) (L)
   include L_1
@@ -38,4 +39,6 @@ end
 
 module LTests = LCheck.GenericTests (L)
 
-let () = exit (QCheck_base_runner.run_tests LTests.suite)
+let () =
+  Alcotest.run "pair lattice"
+    [ ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite) ]

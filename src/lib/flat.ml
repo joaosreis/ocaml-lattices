@@ -1,3 +1,5 @@
+open! Core
+
 type 'a flat = Bottom | Top | Element of 'a [@@deriving sexp_of]
 
 module Make (X : sig

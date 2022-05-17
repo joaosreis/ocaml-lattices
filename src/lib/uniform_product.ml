@@ -1,4 +1,4 @@
-open Base
+open! Core
 
 module Make
     (L : Sig.S) (N : sig
@@ -28,6 +28,6 @@ struct
 
   let to_string x =
     let l = [ "]" ] in
-    let l = "[" :: List.map ~f:L.to_string x @ l in
+    let l = ("[" :: List.map ~f:L.to_string x) @ l in
     String.concat ~sep:";" l
 end

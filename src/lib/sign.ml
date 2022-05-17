@@ -1,3 +1,5 @@
+open! Core
+
 type sign = Zero | Pos | Neg [@@deriving eq, sexp_of]
 
 include Flat.Make (struct

@@ -1,6 +1,7 @@
+open! Core
 open QCheck
 
-module L = Flat.Make (struct
+module L = Flat_test.Make (struct
   type t = Lattices.Sign.sign [@@deriving sexp_of]
 
   let gen = Gen.oneofl [ Lattices.Sign.Neg; Pos; Zero ]
@@ -17,6 +18,12 @@ module L = Flat.Make (struct
   let name = "sign"
 end)
 
-module LTests = LCheck.GenericTopTests (L)
+module LTests = LCheck.GenericTests (L)
+module LTestsTop = LCheck.GenericTopTests (L)
 
-let () = exit (QCheck_base_runner.run_tests LTests.suite)
+let () =
+  Alcotest.run "sign lattice"
+    [
+      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+    ]

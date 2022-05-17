@@ -1,3 +1,5 @@
+open! Core
+
 module Make (L : Lattices.Sig.S) = struct
   include L
 

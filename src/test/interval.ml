@@ -1,3 +1,4 @@
+open! Core
 open Lattices
 open QCheck
 
@@ -77,6 +78,12 @@ module L : LCheck.LATTICE = struct
     set_print (fun (a, a') -> "(" ^ to_string a ^ ";" ^ to_string a' ^ ")") a
 end
 
-module LTests = LCheck.GenericTopTests (L)
+module LTests = LCheck.GenericTests (L)
+module LTestsTop = LCheck.GenericTopTests (L)
 
-let () = exit (QCheck_base_runner.run_tests LTests.suite)
+let () =
+  Alcotest.run "interval lattice"
+    [
+      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+    ]

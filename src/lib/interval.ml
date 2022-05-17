@@ -1,4 +1,4 @@
-open Base
+open! Core
 
 type lower_bound = [ `LInf | `Int of int ] [@@deriving sexp_of]
 

@@ -1,4 +1,4 @@
-open Base
+open! Core
 
 module type S = sig
   module Elt : Comparable.S

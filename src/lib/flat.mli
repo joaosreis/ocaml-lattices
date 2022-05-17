@@ -1,3 +1,5 @@
+open! Core
+
 type 'a flat = Bottom | Top | Element of 'a
 
 module Make (X : sig

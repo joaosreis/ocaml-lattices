@@ -1,4 +1,4 @@
-name: CI
+name: Build & run tests
 
 on:
   push:
@@ -13,14 +13,11 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
         ocaml-compiler:
-          - 4.08.x
-          - 4.09.x
-          - 4.10.x
           - 4.11.x
           - 4.12.x
           - 4.13.x
+          - 4.14.x
 
     runs-on: ${{ matrix.os }}
 
@@ -32,9 +29,6 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          opam-repositories: |
-            default: https://github.com/ocaml/opam-repository.git
-            joaosreis: https://github.com/joaosreis/opam-repository.git
 
       - run: opam install . --deps-only --with-test
 

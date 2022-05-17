@@ -1,3 +1,5 @@
+open! Core
+
 type lower_bound = [ `LInf | `Int of int ]
 
 type upper_bound = [ `HInf | `Int of int ]

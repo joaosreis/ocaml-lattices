@@ -1,4 +1,4 @@
-open Base
+open! Core
 open QCheck
 
 module L = struct
@@ -59,6 +59,8 @@ end
 include L
 module LTests = LCheck.GenericTests (L)
 
-let () = Caml.exit (QCheck_base_runner.run_tests LTests.suite)
+let () =
+  Alcotest.run "int lattice"
+    [ ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite) ]
 
 let gen = arb_elem.gen
