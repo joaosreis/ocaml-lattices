@@ -13,7 +13,7 @@ module L : LCheck.LATTICE_TOPLESS = struct
   let name = "powerset lattice"
 
   let arb_elem =
-    let gen = Gen.(map (Set.of_list (module L_1.Elt)) (list int)) in
+    let gen = Gen.(map L_1.Elt.Set.of_list (list int)) in
     make gen ~print:to_string
 
   let arb_elem_le e =

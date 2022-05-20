@@ -24,9 +24,9 @@ module L : LCheck.LATTICE = struct
       Gen.(
         frequency
           [
-            (1, return (Set.empty (module L_1.Elt)));
-            (1, return (Set.singleton (module L_1.Elt) false));
-            (1, return (Set.singleton (module L_1.Elt) true));
+            (1, return L_1.Elt.Set.empty);
+            (1, return (L_1.Elt.Set.singleton false));
+            (1, return (L_1.Elt.Set.singleton true));
             (1, return bottom);
           ])
     in

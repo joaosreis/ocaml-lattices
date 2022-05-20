@@ -1,16 +1,20 @@
 open! Core
 
 module Make (D : sig
-  include Comparable.S
+  type t
 
   include Sexpable.S with type t := t
 
+  module Map : Map.S with type Key.t := t
+
+  module Set : Set.S with type Elt.t := t
+
   val to_string : t -> string
 end) (B : sig
-  val bottom_elems : Set.M(D).t
+  val bottom_elems : D.Set.t
 end)
 (L : Sig.S) : sig
-  include Sig.S with type t = L.t Map.M(D).t
+  include Sig.S with type t = L.t D.Map.t
 
   val set : t -> D.t -> L.t -> t
 
