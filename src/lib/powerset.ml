@@ -22,11 +22,8 @@ module Make (D : ELT) = struct
   type t = Elt.Set.t [@@deriving sexp_of]
 
   let bottom = Elt.Set.empty
-
   let join = Elt.Set.union
-
   let meet = Elt.Set.inter
-
   let leq x y = Elt.Set.is_subset x ~of_:y
 
   let to_string x =
@@ -35,7 +32,8 @@ module Make (D : ELT) = struct
 end
 
 module Make_reverse
-    (D : ELT) (B : sig
+    (D : ELT)
+    (B : sig
       val bottom : D.Set.t
     end) =
 struct
@@ -46,13 +44,9 @@ struct
   type t = Elt.Set.t [@@deriving sexp_of]
 
   let bottom = Elt.Set.of_list bottom
-
   let top = Elt.Set.empty
-
   let join = Elt.Set.inter
-
   let meet = Elt.Set.union
-
   let leq x y = Elt.Set.equal x y || not (Elt.Set.is_subset x ~of_:y)
 
   let to_string x =

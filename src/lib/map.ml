@@ -1,19 +1,19 @@
 open! Core
 
-module Make (D : sig
-  type t
+module Make
+    (D : sig
+      type t
 
-  include Sexpable.S with type t := t
+      include Sexpable.S with type t := t
+      module Map : Map.S with type Key.t := t
+      module Set : Set.S with type Elt.t := t
 
-  module Map : Map.S with type Key.t := t
-
-  module Set : Set.S with type Elt.t := t
-
-  val to_string : t -> string
-end) (B : sig
-  val bottom_elems : D.Set.t
-end)
-(L : Sig.S) =
+      val to_string : t -> string
+    end)
+    (B : sig
+      val bottom_elems : D.Set.t
+    end)
+    (L : Sig.S) =
 struct
   exception Incompatible_arguments of string
 
@@ -52,6 +52,5 @@ struct
     [%string "[ %{s} ]"]
 
   let set x key data = Map.set x ~key ~data
-
   let get x key = Map.find x key
 end

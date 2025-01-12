@@ -3,11 +3,9 @@ open QCheck
 
 module L = struct
   type elem = Bottom | I of int [@@deriving sexp_of]
-
   type t = elem [@@deriving sexp_of]
 
   let bot = Bottom
-
   let bottom = bot
 
   let leq x y =

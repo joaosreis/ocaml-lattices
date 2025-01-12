@@ -6,9 +6,7 @@ module Make (E : sig
   type t [@@deriving sexp_of, eq]
 
   val gen : t Gen.t
-
   val to_string : t -> string
-
   val name : string
 end) : LCheck.LATTICE = struct
   module L = Flat.Make (E)

@@ -19,7 +19,8 @@ end
 module Make (D : ELT) : S with module Elt = D
 
 module Make_reverse
-    (D : ELT) (B : sig
+    (D : ELT)
+    (B : sig
       val bottom : D.Set.t
     end) : sig
   include S with module Elt = D

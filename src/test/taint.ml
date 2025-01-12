@@ -5,7 +5,6 @@ module L = Flat_test.Make (struct
   include Bool
 
   let gen = Gen.bool
-
   let name = "taint"
 end)
 

@@ -5,7 +5,6 @@ module L = Flat_test.Make (struct
   type t = Lattices.Sign.sign [@@deriving sexp_of]
 
   let gen = Gen.oneofl [ Lattices.Sign.Neg; Pos; Zero ]
-
   let to_string = function Lattices.Sign.Zero -> "0" | Pos -> "+" | Neg -> "-"
 
   let equal x y =

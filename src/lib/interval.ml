@@ -1,7 +1,6 @@
 open! Core
 
 type lower_bound = [ `LInf | `Int of int ] [@@deriving sexp_of]
-
 type upper_bound = [ `HInf | `Int of int ] [@@deriving sexp_of]
 
 let bound_leq x y =
@@ -13,25 +12,15 @@ let bound_leq x y =
   | `Int x, `Int y -> x <= y
 
 let%test _ = bound_leq `LInf `LInf
-
 let%test _ = not (bound_leq `HInf `LInf)
-
 let%test _ = bound_leq `LInf `HInf
-
 let%test _ = bound_leq `HInf `HInf
-
 let%test _ = not (bound_leq `HInf (`Int 0))
-
 let%test _ = bound_leq (`Int 0) `HInf
-
 let%test _ = bound_leq `LInf (`Int 0)
-
 let%test _ = not (bound_leq (`Int 0) `LInf)
-
 let%test _ = bound_leq (`Int 0) (`Int 1)
-
 let%test _ = not (bound_leq (`Int 1) (`Int 0))
-
 let%test _ = bound_leq (`Int 0) (`Int 0)
 
 let bound_to_string = function
@@ -62,7 +51,6 @@ let ubound_max x y =
 type t = Empty | Interval of lower_bound * upper_bound [@@deriving sexp_of]
 
 let bottom = Empty
-
 let top = Interval (`LInf, `HInf)
 
 let leq x y =

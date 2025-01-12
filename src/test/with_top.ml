@@ -5,7 +5,6 @@ module Make (L : sig
   include Lattices.Sig.S
 
   val gen : t Gen.t
-
   val name : string
 end) : LCheck.LATTICE = struct
   open Lattices
@@ -14,7 +13,6 @@ end) : LCheck.LATTICE = struct
   include Lcheck_helper.Make (L_1)
 
   let equal x y = leq x y && leq y x
-
   let name = L.name ^ " lattice"
 
   let arb_elem =

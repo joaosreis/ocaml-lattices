@@ -7,9 +7,7 @@ module L : LCheck.LATTICE_TOPLESS = struct
   include Lcheck_helper.Make (L_1)
 
   let bot = bottom
-
   let equal x y = leq x y && leq y x
-
   let name = "powerset lattice"
 
   let arb_elem =

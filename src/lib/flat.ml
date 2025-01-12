@@ -6,14 +6,12 @@ module Make (X : sig
   type t [@@deriving sexp_of]
 
   val to_string : t -> string
-
   val equal : t -> t -> bool
 end) =
 struct
   type t = X.t flat [@@deriving sexp_of]
 
   let bottom = Bottom
-
   let top = Top
 
   let leq x y =

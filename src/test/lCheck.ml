@@ -17,22 +17,15 @@ module type LATTICE_TOPLESS = sig
   type elem
 
   val leq : elem -> elem -> bool
-
   val join : elem -> elem -> elem
-
   val meet : elem -> elem -> elem
-
   val bot : elem
 
   (*  val top       : elem *)
   val eq : elem -> elem -> bool
-
   val to_string : elem -> string
-
   val arb_elem : elem arbitrary
-
   val equiv_pair : (elem * elem) arbitrary
-
   val arb_elem_le : elem -> elem arbitrary
 end
 
@@ -45,12 +38,10 @@ end
 module GenericTests (L : LATTICE_TOPLESS) = struct
   (* Helpers for generating pairs and triples *)
   let arb_pair = pair L.arb_elem L.arb_elem
-
   let arb_triple = triple L.arb_elem L.arb_elem L.arb_elem
 
   (* Helpers for pretty printing pairs and triples *)
   let pp_pair = Print.pair L.to_string L.to_string
-
   let pp_triple = Print.triple L.to_string L.to_string L.to_string
 
   let ord_pair =
@@ -69,9 +60,7 @@ module GenericTests (L : LATTICE_TOPLESS) = struct
     make gen ~print:pp_triple
 
   let small a = String.length (L.to_string a)
-
   let small_pair p = String.length (pp_pair p)
-
   let small_triple t = String.length (pp_triple t)
 
   (* Generic lattice property tests *)
@@ -262,7 +251,6 @@ module type ARB_ARG = sig
   type elem
 
   val arb_elem : elem arbitrary
-
   val to_string : elem -> string
 end
 
@@ -270,7 +258,6 @@ module MkArbListArg (A : ARB_ARG) = struct
   type elem = A.elem list
 
   let arb_elem = list_of_size (Gen.int_bound 20) A.arb_elem
-
   let to_string = Print.list A.to_string
 end
 
@@ -398,24 +385,16 @@ module Bool = struct
   type elem = bool
 
   let leq a b = if a then true else not b
-
   let join = ( && )
-
   let meet = ( || )
-
   let bot = true
-
   let top = false
-
   let eq = ( = )
-
   let to_string = string_of_bool
 
   (* The below ones are generic *)
   let arb_elem = bool
-
   let equiv_pair = map (fun a -> (a, a)) arb_elem
-
   let arb_elem_le e = if e = top then arb_elem else always bot
 end
 
@@ -428,24 +407,16 @@ module DBool = struct
   type elem = bool
 
   let leq a b = if a then b else true
-
   let join = ( || )
-
   let meet = ( && )
-
   let bot = false
-
   let top = true
-
   let eq = ( = )
-
   let to_string = string_of_bool
 
   (* The below ones are generic *)
   let arb_elem = bool
-
   let equiv_pair = map (fun a -> (a, a)) arb_elem
-
   let arb_elem_le e = if e = top then arb_elem else always bot
 end
 
@@ -460,21 +431,13 @@ module MkPairLattice (A : LATTICE_TOPLESS) (B : LATTICE_TOPLESS) = struct
   type elem = A.elem * B.elem
 
   let leq p p' = A.leq (fst p) (fst p') && B.leq (snd p) (snd p')
-
   let join p p' = (A.join (fst p) (fst p'), B.join (snd p) (snd p'))
-
   let meet p p' = (A.meet (fst p) (fst p'), B.meet (snd p) (snd p'))
-
   let bot = (A.bot, B.bot)
-
   let eq p p' = A.eq (fst p) (fst p') && B.eq (snd p) (snd p')
-
   let to_string = Print.pair A.to_string B.to_string
-
   let arb_elem = pair A.arb_elem B.arb_elem
-
   let equiv_pair = map (fun a -> (a, a)) arb_elem
-
   let arb_elem_le p = pair (A.arb_elem_le (fst p)) (B.arb_elem_le (snd p))
 end
 
@@ -510,9 +473,7 @@ module MkListLattice (A : LATTICE_TOPLESS) = struct
     | _, _ -> false
 
   let to_string = Print.list A.to_string
-
   let arb_elem = list A.arb_elem
-
   let equiv_pair = map (fun v -> (v, v)) arb_elem
 
   let arb_elem_le vs =
