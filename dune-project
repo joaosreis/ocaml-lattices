@@ -15,9 +15,9 @@
 
 (license MIT)
 
-(authors "Jo\195\163o Santos Reis <joaosreis@outlook.pt>")
+(authors "João Santos Reis <joaosreis@outlook.pt>")
 
-(maintainers "Jo\195\163o Santos Reis <joaosreis@outlook.pt>")
+(maintainers "João Santos Reis <joaosreis@outlook.pt>")
 
 (package
  (name lattices)
@@ -25,7 +25,9 @@
  (depends
   (dune :build)
   (core
-   (>= 0.15))
+   (and
+    (>= v0.15)
+    (< v0.16)))
   bignum
   ppx_sexp_conv
   ppx_deriving
