@@ -19,13 +19,13 @@
         on = opam-nix.lib.${system};
         devPackagesQuery = {
           # You can add "development" packages here. They will get added to the devShell automatically.
-          ocaml-lsp-server = "1.18.0";
-          ocamlformat = "0.27.0";
+          ocaml-lsp-server = "*";
+          ocamlformat = "*";
         };
         query = devPackagesQuery // {
           ## You can force versions of certain packages here, e.g:
           ## - force the ocaml compiler to be taken from opam-repository:
-          ocaml-base-compiler = "4.14.2";
+          ocaml-base-compiler = "*";
           ## - or force the compiler to be taken from nixpkgs and be a certain version:
           # ocaml-system = "4.14.0";
           ## - or force ocamlfind to be a certain version:
