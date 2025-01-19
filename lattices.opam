@@ -9,7 +9,7 @@ homepage: "https://github.com/joaosreis/ocaml-lattices"
 bug-reports: "https://github.com/joaosreis/ocaml-lattices/issues"
 depends: [
   "dune" {>= "2.8" & build}
-  "core" {>= "v0.15" & < "v0.16"}
+  "core" {>= "v0.14" & < "v0.15"}
   "bignum"
   "ppx_sexp_conv"
   "ppx_deriving"
