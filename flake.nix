@@ -52,6 +52,8 @@
         devShells.default = pkgs.mkShell {
           inputsFrom = [ main ];
           buildInputs = devPackages ++ [
+            pkgs.nixfmt
+            pkgs.nixd
             # You can add packages from nixpkgs here
           ];
         };
