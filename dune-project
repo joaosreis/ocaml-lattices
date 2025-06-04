@@ -34,6 +34,7 @@
     (< 2.0)))
   ppx_deriving
   ppx_string
+  ppx_inline_test
   (qcheck :with-test)
   (qcheck-alcotest :with-test)
   (alcotest :with-test)))
