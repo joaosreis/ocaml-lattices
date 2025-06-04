@@ -1,5 +1,10 @@
-open! Core
-include Flat.Make (Bool)
+open! Containers
+
+include Flat.Make (struct
+  include Bool
+
+  let to_string = function true -> "tainted" | false -> "untainted"
+end)
 
 let join_taint x y =
   let open Flat in

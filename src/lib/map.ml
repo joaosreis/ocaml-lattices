@@ -1,12 +1,11 @@
-open! Core
+open! Containers
 
 module Make
     (D : sig
       type t
 
-      include Sexpable.S with type t := t
-      module Map : Map.S with type Key.t := t
-      module Set : Set.S with type Elt.t := t
+      module Map : Map.S with type key := t
+      module Set : Set.S with type elt := t
 
       val to_string : t -> string
     end)
@@ -17,40 +16,44 @@ module Make
 struct
   exception Incompatible_arguments of string
 
-  type t = L.t D.Map.t [@@deriving sexp_of]
+  type t = L.t D.Map.t
 
   let bottom =
-    Set.fold
-      ~f:(fun map x -> Map.set map ~key:x ~data:L.bottom)
-      B.bottom_elems ~init:D.Map.empty
+    D.Set.fold
+      (fun x map -> D.Map.add x L.bottom map)
+      B.bottom_elems D.Map.empty
 
   let join x y =
-    Map.mapi x ~f:(fun ~key ~data ->
-        match Map.find y key with
+    D.Map.mapi
+      (fun key data ->
+        match D.Map.find_opt key y with
         | Some data_y -> L.join data data_y
         | None -> raise (Incompatible_arguments "different key set"))
+      x
 
   let meet x y =
-    Map.mapi x ~f:(fun ~key ~data ->
-        match Map.find y key with
+    D.Map.mapi
+      (fun key data ->
+        match D.Map.find_opt key y with
         | Some data_y -> L.meet data data_y
         | None -> raise (Incompatible_arguments "different key set"))
+      x
 
   let leq x y =
-    if Map.length x > Map.length y then false
+    if D.Map.cardinal x > D.Map.cardinal y then false
     else
-      Map.for_alli x ~f:(fun ~key ~data ->
-          match Map.find y key with
+      D.Map.for_all
+        (fun key data ->
+          match D.Map.find_opt key y with
           | Some data_y -> L.leq data data_y
           | None -> raise (Incompatible_arguments "different key set"))
+        x
 
   let to_string x =
     let f (key, data) = [%string "%{key#D}: %{data#L}; "] in
-    let s =
-      List.fold_left (Map.to_alist x) ~f:(fun acc x -> acc ^ f x) ~init:""
-    in
+    let s = List.fold_left (fun acc x -> acc ^ f x) "" (D.Map.to_list x) in
     [%string "[ %{s} ]"]
 
-  let set x key data = Map.set x ~key ~data
-  let get x key = Map.find x key
+  let set x key data = D.Map.add key data x
+  let get x key = D.Map.find_opt key x
 end

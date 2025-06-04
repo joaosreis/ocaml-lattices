@@ -1,4 +1,4 @@
-open! Core
+open! Containers
 open Lattices
 open QCheck
 
@@ -84,6 +84,6 @@ module LTestsTop = LCheck.GenericTopTests (L)
 let () =
   Alcotest.run "interval lattice"
     [
-      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
-      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+      ("properties", List.map QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map QCheck_alcotest.to_alcotest LTestsTop.suite);
     ]

@@ -1,9 +1,9 @@
-open! Core
+open! Containers
 
 module type ELT = sig
   type t
 
-  module Set : Set.S with type Elt.t := t
+  module Set : Set.S with type elt := t
 
   val to_string : t -> string
 end
@@ -18,17 +18,18 @@ end
 
 module Make (D : ELT) = struct
   module Elt = D
+  module Set = Elt.Set
 
-  type t = Elt.Set.t [@@deriving sexp_of]
+  type t = Elt.Set.t
 
-  let bottom = Elt.Set.empty
-  let join = Elt.Set.union
-  let meet = Elt.Set.inter
-  let leq x y = Elt.Set.is_subset x ~of_:y
+  let bottom = Set.empty
+  let join = Set.union
+  let meet = Set.inter
+  let leq x y = Set.subset x y
 
   let to_string x =
     let f x = [%string "%{x#Elt};"] in
-    List.fold_left (Set.to_list x) ~f:(fun acc x -> acc ^ f x) ~init:""
+    List.fold_left (fun acc x -> acc ^ f x) "" (Set.to_list x)
 end
 
 module Make_reverse
@@ -38,18 +39,19 @@ module Make_reverse
     end) =
 struct
   module Elt = D
+  module Set = D.Set
 
   let bottom = Set.to_list B.bottom
 
-  type t = Elt.Set.t [@@deriving sexp_of]
+  type t = Set.t
 
-  let bottom = Elt.Set.of_list bottom
-  let top = Elt.Set.empty
-  let join = Elt.Set.inter
-  let meet = Elt.Set.union
-  let leq x y = Elt.Set.equal x y || not (Elt.Set.is_subset x ~of_:y)
+  let bottom = Set.of_list bottom
+  let top = Set.empty
+  let join = Set.inter
+  let meet = Set.union
+  let leq x y = Set.equal x y || not (Set.subset x y)
 
   let to_string x =
     let f x = [%string "%{x#D};"] in
-    List.fold_left (Elt.Set.to_list x) ~f:(fun acc x -> acc ^ f x) ~init:""
+    List.fold_left (fun acc x -> acc ^ f x) "" (Set.to_list x)
 end

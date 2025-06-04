@@ -1,9 +1,9 @@
-open! Core
+open! Containers
 
 module type ELT = sig
   type t
 
-  module Set : Set.S with type Elt.t := t
+  module Set : Set.S with type elt := t
 
   val to_string : t -> string
 end
@@ -16,7 +16,7 @@ module type S = sig
   include Sig.S with type t := t
 end
 
-module Make (D : ELT) : S with module Elt = D
+module Make (D : ELT) : S with type Elt.t = D.t
 
 module Make_reverse
     (D : ELT)

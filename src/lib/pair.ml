@@ -1,7 +1,7 @@
-open! Core
+open! Containers
 
 module Make (L1 : Sig.S) (L2 : Sig.S) = struct
-  type t = L1.t * L2.t [@@deriving sexp_of]
+  type t = L1.t * L2.t
 
   let bottom = (L1.bottom, L2.bottom)
   let join x y = (L1.join (fst x) (fst y), L2.join (snd x) (snd y))

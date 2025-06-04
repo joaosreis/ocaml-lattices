@@ -1,4 +1,4 @@
-open! Core
+open! Containers
 
 module Make (L1 : Sig.S) (L2 : Sig.S) : sig
   include Sig.S with type t = L1.t * L2.t

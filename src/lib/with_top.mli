@@ -1,4 +1,4 @@
-open! Core
+open! Containers
 
 module type S = sig
   type elt

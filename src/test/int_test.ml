@@ -1,9 +1,9 @@
-open! Core
+open! Containers
 open QCheck
 
 module L = struct
-  type elem = Bottom | I of int [@@deriving sexp_of]
-  type t = elem [@@deriving sexp_of]
+  type elem = Bottom | I of int
+  type t = elem
 
   let bot = Bottom
   let bottom = bot
@@ -59,6 +59,6 @@ module LTests = LCheck.GenericTests (L)
 
 let () =
   Alcotest.run "int lattice"
-    [ ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite) ]
+    [ ("properties", List.map QCheck_alcotest.to_alcotest LTests.suite) ]
 
 let gen = arb_elem.gen

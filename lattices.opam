@@ -9,9 +9,8 @@ homepage: "https://github.com/joaosreis/ocaml-lattices"
 bug-reports: "https://github.com/joaosreis/ocaml-lattices/issues"
 depends: [
   "dune" {>= "2.8" & build}
-  "core" {>= "v0.14" & < "v0.15"}
-  "bignum"
-  "ppx_sexp_conv"
+  "containers" {>= "3.0" & < "4.0"}
+  "zarith" {>= "1.0" & < "2.0"}
   "ppx_deriving"
   "ppx_string"
   "qcheck" {with-test}

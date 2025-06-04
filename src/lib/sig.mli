@@ -1,7 +1,7 @@
-open! Core
+open! Containers
 
 module type S = sig
-  type t [@@deriving sexp_of]
+  type t
 
   val bottom : t
   val leq : t -> t -> bool

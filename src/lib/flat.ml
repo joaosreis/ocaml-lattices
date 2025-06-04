@@ -1,15 +1,15 @@
-open! Core
+open! Containers
 
-type 'a flat = Bottom | Top | Element of 'a [@@deriving sexp_of]
+type 'a flat = Bottom | Top | Element of 'a
 
 module Make (X : sig
-  type t [@@deriving sexp_of]
+  type t
 
   val to_string : t -> string
   val equal : t -> t -> bool
 end) =
 struct
-  type t = X.t flat [@@deriving sexp_of]
+  type t = X.t flat
 
   let bottom = Bottom
   let top = Top

@@ -1,8 +1,8 @@
-open! Core
+open! Containers
 open QCheck
 
 module L = Flat_test.Make (struct
-  type t = Lattices.Sign.sign [@@deriving sexp_of]
+  type t = Lattices.Sign.sign
 
   let gen = Gen.oneofl [ Lattices.Sign.Neg; Pos; Zero ]
   let to_string = function Lattices.Sign.Zero -> "0" | Pos -> "+" | Neg -> "-"
@@ -23,6 +23,6 @@ module LTestsTop = LCheck.GenericTopTests (L)
 let () =
   Alcotest.run "sign lattice"
     [
-      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
-      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+      ("properties", List.map QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map QCheck_alcotest.to_alcotest LTestsTop.suite);
     ]

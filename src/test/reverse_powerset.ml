@@ -1,13 +1,20 @@
-open! Core
+open! Containers
 open Lattices
 open QCheck
+
+module Bool = struct
+  include Bool
+  module Set = Set.Make (Bool)
+
+  let to_string = function true -> "true" | false -> "false"
+end
 
 module L : LCheck.LATTICE = struct
   module L_1 =
     Powerset.Make_reverse
       (Bool)
       (struct
-        let bottom = Set.add (Set.singleton (module Bool) false) true
+        let bottom = Bool.Set.add true (Bool.Set.singleton false)
       end)
 
   include L_1
@@ -36,8 +43,8 @@ module L : LCheck.LATTICE = struct
       | e when equal e bot -> Gen.return bottom
       | e ->
           Gen.(
-            let x = Set.choose_exn e in
-            let _, _, s = Set.split e x in
+            let x = Elt.Set.choose e in
+            let _, _, s = Elt.Set.split x e in
             return s)
     in
     make gen ~print:to_string
@@ -53,6 +60,6 @@ module LTestsTop = LCheck.GenericTopTests (L)
 let () =
   Alcotest.run "reverse powerset lattice"
     [
-      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
-      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+      ("properties", List.map QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map QCheck_alcotest.to_alcotest LTestsTop.suite);
     ]

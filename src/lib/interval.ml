@@ -1,7 +1,7 @@
-open! Core
+open! Containers
 
-type lower_bound = [ `LInf | `Int of int ] [@@deriving sexp_of]
-type upper_bound = [ `HInf | `Int of int ] [@@deriving sexp_of]
+type lower_bound = [ `LInf | `Int of int ]
+type upper_bound = [ `HInf | `Int of int ]
 
 let bound_leq x y =
   match (x, y) with
@@ -48,7 +48,7 @@ let ubound_max x y =
   | `HInf, _ | _, `HInf -> `HInf
   | `Int x, `Int y -> `Int (max x y)
 
-type t = Empty | Interval of lower_bound * upper_bound [@@deriving sexp_of]
+type t = Empty | Interval of lower_bound * upper_bound
 
 let bottom = Empty
 let top = Interval (`LInf, `HInf)

@@ -1,9 +1,9 @@
-open! Core
+open! Containers
 
-type sign = Zero | Pos | Neg [@@deriving eq, sexp_of]
+type sign = Zero | Pos | Neg [@@deriving eq]
 
 include Flat.Make (struct
-  type t = sign [@@deriving eq, sexp_of]
+  type t = sign [@@deriving eq]
 
   let to_string = function Zero -> "0" | Pos -> "+" | Neg -> "-"
 end)
@@ -49,7 +49,7 @@ let sign i =
 
 let sign_bigint i =
   let open Flat in
-  Bigint.(
-    if i = zero then Element Zero
-    else if i > zero then Element Pos
+  Z.(
+    if equal i zero then Element Zero
+    else if gt i zero then Element Pos
     else Element Neg)

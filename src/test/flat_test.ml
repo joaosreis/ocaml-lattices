@@ -1,9 +1,9 @@
-open! Core
+open! Containers
 open Lattices
 open QCheck
 
 module Make (E : sig
-  type t [@@deriving sexp_of, eq]
+  type t [@@deriving eq]
 
   val gen : t Gen.t
   val to_string : t -> string
@@ -45,6 +45,6 @@ module LTestsTop = LCheck.GenericTopTests (L)
 let () =
   Alcotest.run "flat lattice"
     [
-      ("properties", List.map ~f:QCheck_alcotest.to_alcotest LTests.suite);
-      ("top properties", List.map ~f:QCheck_alcotest.to_alcotest LTestsTop.suite);
+      ("properties", List.map QCheck_alcotest.to_alcotest LTests.suite);
+      ("top properties", List.map QCheck_alcotest.to_alcotest LTestsTop.suite);
     ]

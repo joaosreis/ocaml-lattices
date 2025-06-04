@@ -1,4 +1,4 @@
-open! Core
+open! Containers
 
 module Make
     (L : Sig.S)

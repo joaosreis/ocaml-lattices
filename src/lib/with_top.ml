@@ -1,8 +1,8 @@
-open! Core
+open! Containers
 
 module type S = sig
   type elt
-  type t = [ `Top | `Some of elt ] [@@deriving sexp_of]
+  type t = [ `Top | `Some of elt ]
 
   include Sig.S with type t := t
 
@@ -10,8 +10,8 @@ module type S = sig
 end
 
 module Make (L : Sig.S) = struct
-  type elt = L.t [@@deriving sexp_of]
-  type t = [ `Top | `Some of elt ] [@@deriving sexp_of]
+  type elt = L.t
+  type t = [ `Top | `Some of elt ]
 
   let bottom = `Some L.bottom
   let top = `Top

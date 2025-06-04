@@ -1,7 +1,7 @@
 (library
  (name lattices)
  (public_name lattices)
- (libraries core bignum)
+ (libraries containers zarith)
  (inline_tests)
  (preprocess
   (pps

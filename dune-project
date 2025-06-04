@@ -24,12 +24,14 @@
  (synopsis "A library with various implementations and functors of lattices")
  (depends
   (dune :build)
-  (core
+  (containers
    (and
-    (>= v0.14)
-    (< v0.15)))
-  bignum
-  ppx_sexp_conv
+    (>= 3.0)
+    (< 4.0)))
+  (zarith
+   (and
+    (>= 1.0)
+    (< 2.0)))
   ppx_deriving
   ppx_string
   (qcheck :with-test)

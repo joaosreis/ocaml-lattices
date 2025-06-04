@@ -1,12 +1,11 @@
-open! Core
+open! Containers
 
 module Make
     (D : sig
       type t
 
-      include Sexpable.S with type t := t
-      module Map : Map.S with type Key.t := t
-      module Set : Set.S with type Elt.t := t
+      module Map : Map.S with type key := t
+      module Set : Set.S with type elt := t
 
       val to_string : t -> string
     end)

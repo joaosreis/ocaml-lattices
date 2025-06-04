@@ -1,7 +1,7 @@
-open! Core
+open! Containers
 
 module Make (L : Sig.S) = struct
-  type t = L.t list [@@deriving sexp_of]
+  type t = L.t list
 
   let bottom : t = []
 
@@ -23,5 +23,5 @@ module Make (L : Sig.S) = struct
     | _, [] -> []
     | h_1 :: t_1, h_2 :: t_2 -> L.meet h_1 h_2 :: meet t_1 t_2
 
-  let to_string x = List.map x ~f:L.to_string |> String.concat ~sep:", "
+  let to_string x = List.map L.to_string x |> String.concat ", "
 end
